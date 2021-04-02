@@ -79,7 +79,7 @@ export const opsiPendidikanIbu = [
 export  const opsiTempatTinggal= [
     {
       value: '0',
-      label: 'Urbannn (Perkotaan)',
+      label: 'Urban (Perkotaan)',
     },
     {
       value: '1',
