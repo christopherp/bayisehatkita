@@ -105,15 +105,15 @@ export const opsiQuintileEkonomi = [
     },
     {
         value: '1',
-        label: 'Rp.6.000.000 - Rp.17.000.000',
+        label: 'Rp.6.000.000 - Rp.17.000.000.0',
     },
     {
         value: '2',
-        label: 'Rp.17.000.000 - Rp.31.200.000',
+        label: 'Rp.17.000.000.0 - Rp.31.200.000.0',
     },
     {
         value: '3',
-        label: 'Rp.31.200.000 - Rp.60.000.000',
+        label: 'Rp.31.200.000.0 - Rp.60.000.000.0',
     },
     {
         value: '4',
