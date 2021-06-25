@@ -34,7 +34,15 @@ const javascriptStyles = {
   text: {
     color: "#464646",
     fontSize: "15px",
-    textTransform : "none"
+    textTransform : "none",
+    paddingTop: 0
+  },
+  modalContent: {
+    fontSize: "1.2rem",
+    margin: "5px 0 0",
+    fontWeight: "300",
+    lineHeight: "1.6",
+    color: "#676767"
   }
 };
 

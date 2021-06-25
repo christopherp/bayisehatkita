@@ -35,7 +35,7 @@ class App extends React.Component {
       <Router>
         <div>    
           <Header
-              brand="Stunting Risk Prediction App"
+              brand="BayiSehatKita"
               rightLinks={<HeaderLinks />}
               fixed
               color="white"

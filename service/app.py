@@ -1,11 +1,14 @@
 from flask import Flask, request, jsonify, make_response
 from flask_restx import Api, Resource, fields
-import joblib
+from api.StuntingPredictionApi import Prediction
+#from flask_cors import CORS
+import json
 import numpy as np
 import pandas as pd
-import sys
 
 flask_app = Flask(__name__, static_folder='ui/build', static_url_path='/')
+
+#CORS(flask_app)
 
 @flask_app.route('/')
 def index():
@@ -20,171 +23,70 @@ def not_found(e):
 
 app = Api(app = flask_app, 
 		  version = "1.0", 
-		  title = "Stunting Risk Prediction Tool", 
+		  title = "Stunting Prediction Tool", 
 		  description = "")
 
-kalkulatorRisiko = app.namespace('hitung-risiko', description='Prediction APIs')
-prediksiPertumbuhan = app.namespace('prediksi-pertumbuhan', description='Prediction APIs')
+Prediction = Prediction()
 
-model = app.model('Prediction params', 
-				  {'tinggiBapak': fields.Float(required = True, 
-				  							   description="", 
-    					  				 	   help="Cannot be blank"),
-                    'tinggiIbu': fields.Float(required = True, 
-				  							   description="", 
-    					  				 	   help="Cannot be blank"),
-                    'statusBekerjaIbu': fields.Float(required = True, 
-				  							   description="", 
-    					  				 	   help="Cannot be blank"),
-                    'pendidikanIbu': fields.Float(required = True, 
-				  							   description="", 
-    					  				 	   help="Cannot be blank"),
-                    'tempatTinggal': fields.Float(required = True, 
-				  							   description="", 
-    					  				 	   help="Cannot be blank"),
-                    'beratLahir': fields.Float(required = True, 
-				  							   description="", 
-    					  				 	   help="Cannot be blank"),
-                    'sanitasi': fields.Float(required = True, 
-				  							   description="", 
-    					  				 	   help="Cannot be blank"),
-                    'quintileEkonomi': fields.Float(required = True, 
-				  							   description="", 
-    					  				 	   help="Cannot be blank")                              
-                                                  })
-
-classifier = joblib.load('classifier.joblib')
-antropometri = joblib.load('antropometri.joblib')
-
-def processPendidikanIbu(value):
-		conditions_ibu = [
-			(value < 10),
-			(value < 20) ,
-			(value < 30),
-		]
-		values = [0, 1, 2]
-
-		kategoriPendidikan = np.select(conditions_ibu, values, default=None)
-		return str(kategoriPendidikan)
-
-def processTinggiOrtu(tinggi, tipe):
-		tinggi_ibu_rendah = 146.20374401868486
-		tinggi_ibu_tinggi = 157.10120092625897
-
-		tinggi_ayah_rendah = 157.3582269480648
-		tinggi_ayah_tinggi = 169.50695786711972
-
-		conditions_ibu = [
-			(tinggi < tinggi_ibu_rendah),
-			(tinggi >= tinggi_ibu_rendah) & (tinggi <= tinggi_ibu_tinggi),
-			(tinggi > tinggi_ibu_tinggi),
-		]
-
-		conditions_ayah = [
-			(tinggi < tinggi_ayah_rendah),
-			(tinggi >= tinggi_ayah_rendah) & (tinggi <= tinggi_ayah_tinggi),
-			(tinggi > tinggi_ayah_tinggi),
-		]
-
-		values = [0, 1, 2]
-
-		kategoriTinggi = np.select(conditions_ibu if tipe=="ibu" else conditions_ayah, values, default=None)
-		return str(kategoriTinggi)
-
-def processBeratBayi(berat):
-		conditions = [
-			(berat < 2.5),
-			(berat >= 2.5),
-		]
-
-		values = [0, 1]
-		kategoriBeratBayi = np.select(conditions, values, default=None)
-		return str(kategoriBeratBayi)
-
-def labeling_stunting(umur, tinggi, jenis_kelamin):
-		jeniskelamin = '1:Male' if jenis_kelamin=='0' else '3:Female'
-		antropometri_var = antropometri.loc[(antropometri['umur'] == umur) & (antropometri['jenis_kelamin']== jeniskelamin)]
-		median = antropometri_var['median'].iloc[0]
-		sd_min1 = antropometri_var['sd_min1'].iloc[0]
-		zscore = (tinggi - median) / (median- sd_min1)
-
-		if(zscore < -2):
-			return True
-		else:
-			return False
-
-@kalkulatorRisiko.route("/")
-class KalkulatorRisiko(Resource):
-
-	def options(self):
-		response = make_response()
-		response.headers.add("Access-Control-Allow-Origin", "*")
-		response.headers.add('Access-Control-Allow-Headers', "*")
-		response.headers.add('Access-Control-Allow-Methods', "*")
-		return response
-
-
-	@app.expect(model)		
+@app.route('/api/weight', methods=["POST"])
+class GetWeight(Resource):
 	def post(self):
-		try: 
-			formData = request.json
-			data = [val for val in formData.values()]
-								
-			stunting =	labeling_stunting(float(data[0]),float(data[1]),data[2])
-			print(data)	
-			
-			if(stunting):
-				result = "Anak anda saat ini tergolong balita stunting"
-			else:
-				data[3] = processTinggiOrtu(float(data[3]),"ayah")
-				data[4] = processTinggiOrtu(float(data[4]),"ibu")
-				data[6] = processPendidikanIbu(float(data[6]))
-				data[8] = processBeratBayi(float(data[8]))
-				prediction = classifier.predict_proba(np.array(data[3:11]).reshape(1, -1))
-				persentase = prediction[0,1]*100
-				result = "Resiko anak akan mengalami stunting: " + str('%.3f' % persentase) + "%"	
-			
-			response = jsonify({
-				"statusCode": 200,
-				"status": "Prediction made",
-				"result": result
-				})
-			response.headers.add('Access-Control-Allow-Origin', '*')
-			return response
-		except Exception as error:
-			return jsonify({
-				"statusCode": 500,
-				"status": "Could not make prediction",
-				"error": str(error)
-			})
+		try:
+			params = request.json
+			weight_result = Prediction.getByWeight(**params)
+			return {'data' : weight_result}
+		except Exception as e:
+			return {'error': str(e)}
 
-@prediksiPertumbuhan.route("/")
-class PrediksiPertumbuhan(Resource):
-
-	def options(self):
-		response = make_response()
-		response.headers.add("Access-Control-Allow-Origin", "*")
-		response.headers.add('Access-Control-Allow-Headers', "*")
-		response.headers.add('Access-Control-Allow-Methods', "*")
-		return response
-
-
-	@app.expect(model)		
+@app.route('/api/height', methods=["POST"])
+class GetHeight(Resource):
 	def post(self):
-		try: 
-			formData = request.json
-			data = [val for val in formData.values()]
-										
-			response = jsonify({
-				"statusCode": 200,
-				"status": "Prediction made",
-				"result": data[0]
-				})
-			response.headers.add('Access-Control-Allow-Origin', '*')
-			return response
-		except Exception as error:
-			return jsonify({
-				"statusCode": 500,
-				"status": "Could not make prediction",
-				"error": str(error)
-			})
+		try:
+			params = request.json
+			height_result = Prediction.getByHeight(**params)
+			return {'data' : height_result}
+		except Exception as e:
+			return {'error': str(e)}
+
+@app.route('/api/data', methods=["POST"])
+class GetData(Resource):
+	def post(self):
+		try:
+			print(request.json)
+			requestJson = request.json
+			params = dict()
+			params['age'] = int(requestJson.get('umur'))
+			params['jenisKelamin'] = requestJson.get('jenisKelamin')
+			params['rangeAge'] = int(requestJson.get('rangeBulan'))
+
+			datas = dict()
+			datas['weights'] = []
+			datas['heights'] = []
+			result = list()
+			weights = dict(filter(lambda item: 'berat' in item[0], requestJson.items()))
+			if weights:
+				for item in weights:
+					value = dict()
+					value['Umur'] = int(item.split('-')[1])
+					value['BB'] = float(weights[item])
+					datas['weights'].append(value)
+				params['beratBadan'] = json.dumps(datas['weights'])
+				weightResult = Prediction.getByWeight(**params)
+				result.append(weightResult)
+
+			heights = dict(filter(lambda item: 'tinggi' in item[0], requestJson.items()))
+			if heights:
+				for item in heights:
+					value = dict()
+					value['Umur'] = int(item.split('-')[1])
+					value['TB'] = float(heights[item])
+					datas['heights'].append(value)
+				params['tinggiBadan'] = json.dumps(datas['heights'])
+				heightResult = Prediction.getByHeight(**params)
+				result.append(heightResult)
+
+			return {'data' : result}
+		except Exception as e:
+			return {'error': str(e)}
+
+from api.RiskPredictionApi import RiskPredictionApi

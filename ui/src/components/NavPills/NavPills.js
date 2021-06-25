@@ -22,6 +22,7 @@ export default function NavPills(props) {
   const [active, setActive] = React.useState(props.active);
   const handleChange = (event, active) => {
     setActive(active);
+    props.onChangeIndex(active);
   };
   const handleChangeIndex = index => {
     setActive(index);
@@ -78,8 +79,8 @@ export default function NavPills(props) {
       >
         {tabs.map((prop, key) => {
           return (
-            <div className={classes.tabContent} key={key}>
-              {prop.tabContent}
+            <div className={classes.tabContent} key={key} >
+              {React.cloneElement(prop.tabContent, {changeTab:(i) => setActive(i)})}
             </div>
           );
         })}

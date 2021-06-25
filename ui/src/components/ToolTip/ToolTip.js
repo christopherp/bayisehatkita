@@ -56,30 +56,19 @@ export default function ToolTip(props){
                     >
                       <Close className={classes.modalClose} />
                     </IconButton>
-                    <h4 className={classes.modalTitle}>Modal title</h4>
+                    <h4 className={classes.modalTitle}>Apa Maksud Hasil Tersebut ?</h4>
                   </DialogTitle>
                   <DialogContent
                     id="classic-modal-slide-description"
                     className={classes.modalBody}
                   >
-                    <p>
-                      Far far away, behind the word mountains, far from the
-                      countries Vokalia and Consonantia, there live the blind
-                      texts. Separated they live in Bookmarksgrove right at the
-                      coast of the Semantics, a large language ocean. A small
-                      river named Duden flows by their place and supplies it
-                      with the necessary regelialia. It is a paradisematic
-                      country, in which roasted parts of sentences fly into your
-                      mouth. Even the all-powerful Pointing has no control about
-                      the blind texts it is an almost unorthographic life One
-                      day however a small line of blind text by the name of
-                      Lorem Ipsum decided to leave for the far World of Grammar.
+                    <p className={classes.modalContent}>
+                      Angka persentase risiko tersebut memiliki arti bahwa sebanyak x % dari kelompok
+                      anak yang memiliki faktor-faktor tersebut  mengalami stunting. Hasil survey
+                      tersebut didasarkan dari data 3707 anak pada Indonesian Family Life Survey 2014.
                     </p>
                   </DialogContent>
                   <DialogActions className={classes.modalFooter}>
-                    <Button color="transparent" simple>
-                      Nice Button
-                    </Button>
                     <Button
                       onClick={() => setClassicModal(false)}
                       color="danger"

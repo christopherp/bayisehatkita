@@ -11,46 +11,68 @@ import GridContainer from "../Grid/GridContainer.js";
 import GridItem from "../Grid/GridItem.js";
 import NavPills from "../NavPills/NavPills.js";
 
-import FormInput from '../FormInput/FormInput'
-import FormInputPahmi from '../FormInput/FormInputPahmi'
+import FormInputRisiko from '../FormInput/FormInputRisiko'
+import FormInputPrediksi from '../FormInput/FormInputPrediksi'
 
 import styles from "./pillsStyle";
 
-const useStyles = makeStyles(styles);
+import { withStyles } from '@material-ui/core/styles';
 
-export default function SectionPills() {
-  const classes = useStyles();
-  return (
-    <div className={classes.container}>
-      <div id="navigation-pills">
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={12} lg={12}>
-            <NavPills
-              color="rose"
-              horizontal={{
-                tabsGrid: { xs: 10, sm: 10, md: 2, lg: 2 },
-                contentGrid: { xs: 12, sm: 12, md: 10, lg: 10}
-              }}
-              tabs={[
-                {
-                  tabButton: "Probabilitas Risiko",
-                  tabIcon: Dashboard,
-                  tabContent: (
-                    <FormInput/>
-                  )
-                },
-                {
-                  tabButton: "Prediksi Pertumbuhan",
-                  tabIcon: TimelineIcon,
-                  tabContent: (
-                    <FormInputPahmi/>
-                  )
-                }
-              ]}
-            />
-          </GridItem>
-        </GridContainer>
+class SectionPills extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: 0
+    };
+  }
+
+  handleChange = (event, active) => {
+    this.setState({ active: active });
+  };
+  handleChangeIndex = (index) => {
+    this.setState({ active: index });
+  };
+
+  render(){
+    const { classes } = this.props;
+    return (
+      <div className={classes.container}>
+        <div id="navigation-pills">
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12} lg={12}>
+              <NavPills
+                color="rose"
+                active= {this.state.active}
+                onChange = {() => this.handleChange}
+                onChangeIndex = {() => this.handleChangeIndex}
+                horizontal={{
+                  tabsGrid: { xs: 10, sm: 10, md: 2, lg: 2 },
+                  contentGrid: { xs: 12, sm: 12, md: 10, lg: 10}
+                }}
+                tabs={[
+                  {
+                    tabButton: "Probabilitas Risiko",
+                    tabIcon: Dashboard,
+                    tabContent: (
+                      <FormInputRisiko/>
+                    )
+                  },
+                  {
+                    tabButton: "Prediksi Pertumbuhan",
+                    tabIcon: TimelineIcon,
+                    tabContent: (
+                      <FormInputPrediksi/>
+                    )
+                  }
+                ]}
+              />
+            </GridItem>
+          </GridContainer>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+  
 }
+
+export default withStyles(styles)(SectionPills)

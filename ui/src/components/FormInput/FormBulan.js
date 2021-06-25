@@ -9,10 +9,10 @@ export default function FormBulan(props) {
         let start;
         let end;
 
-        if(props.rentangUmur == '024'){
+        if(props.rangeAge == '24'){
             start = 1;
             end = 24;
-        } else if(props.rentangUmur == '2560'){
+        } else if(props.rangeAge == '60'){
             start = 25;
             end = 60;
         }
@@ -23,18 +23,19 @@ export default function FormBulan(props) {
             array.push(i);
         }   
 
-        return array.map((number) => {
+        return array.map((month) => {
             return (
                 <Grid item xs={4} sm={3} md={2}>
                     <TextField
-                        label={`Bulan ${number}`}
-                        name={`Bulan${number}`}
+                        label={`Bulan ${month}`}
+                        name={`${props.tipe}-${month}`}
                         type="number"
+                        onChange={props.onChange}
                         InputLabelProps={{
                             shrink: true,                          
                         }}
                         InputProps={{
-                            endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                            endAdornment: <InputAdornment position="end">{props.tipe == 'tinggi' ? "cm" : "kg"}</InputAdornment>,
                         }}
                         variant="outlined"
                     />
@@ -42,25 +43,6 @@ export default function FormBulan(props) {
             ) ;
         })
     };
-
-    function renderBulanMultiple(){
-        let start;
-        let end;
-
-        if(props.rentangUmur == '024'){
-            start = 1;
-            end = 24;
-        } else if(props.rentangUmur == '2460'){
-            start = 25;
-            end = 60;
-        }
-        for(let i = start; i < end; i++){
-            renderBulan(i);
-        }
-
-    }
-
-    
 
     return (
         <Grid container spacing={2}>
