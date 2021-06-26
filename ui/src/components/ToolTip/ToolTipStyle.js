@@ -38,10 +38,10 @@ const javascriptStyles = {
     paddingTop: 0
   },
   modalContent: {
-    fontSize: "1.2rem",
+    fontSize: "18px",
     margin: "5px 0 0",
     fontWeight: "300",
-    lineHeight: "1.6",
+    lineHeight: "1.5",
     color: "#676767"
   }
 };

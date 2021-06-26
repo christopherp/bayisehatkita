@@ -1,15 +1,15 @@
 import './Result.component.css';
-import Button from "../CustomButtons/Button.js";
-import Grid from "@material-ui/core/Grid";
+import Typography from '@material-ui/core/Typography';
 
 export default function Result(props) {
     // {props.res}
     return (
         <div>
-            <p className="result">
+            <Typography  variant="h4" component="h1" className="result" color=""> 
                 {props.res}
-            </p>             
-        </div>        
+            </Typography>            
+        </div>
+                
           
     );
 }

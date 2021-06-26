@@ -93,21 +93,23 @@ class RiskPredictionApi(Resource):
             if(stunting):
                 result = "stunting"
                 text = "Anak anda saat ini tergolong balita stunting"
+                persentase = 0
             else:
                 data[3] = self.processTinggiOrtu(float(data[3]),"ayah")
                 data[4] = self.processTinggiOrtu(float(data[4]),"ibu")
                 data[6] = self.processPendidikanIbu(float(data[6]))
                 data[8] = self.processBeratBayi(float(data[8]))
                 prediction = classifier.predict_proba(np.array(data[3:11]).reshape(1, -1))
-                persentase = prediction[0,1]*100
+                persentase =  str('%.3f' % prediction[0,1]*100)
                 result = "!stunting"
-                text = "Resiko anak akan mengalami stunting: " + str('%.3f' % persentase) + "%"	
+                text = "Resiko anak akan mengalami stunting: " + persentase + "%"	
             
             response = jsonify({
                 "statusCode": 200,
                 "status": "Prediction made",
                 "result": result,
-                "text" : text
+                "text" : text,
+                "persentase" : persentase
                 })
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response

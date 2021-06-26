@@ -7,6 +7,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from "../CustomButtons/Button.js";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
+import TimelineIcon from '@material-ui/icons/Timeline';
 import { withStyles } from '@material-ui/core/styles';
 //Opsi Input
 import {
@@ -21,6 +23,7 @@ import {
 import './FormInput.css';
 import Result from '../Result/Result.component';
 import ToolTip from '../ToolTip/ToolTip';
+import Disclaimer from '../Disclaimer/Disclaimer';
 
 
 const useStyles = theme => ({
@@ -44,15 +47,15 @@ class FormInput extends React.Component {
         formData: {
           usia: '',
           tinggiAnak: '',
-          jenisKelamin: '1',
+          jenisKelamin: '',
           tinggiBapak: '',
           tinggiIbu: '',
-          statusBekerjaIbu: '1',
-          pendidikanIbu: '1',
-          tempatTinggal: '1',
+          statusBekerjaIbu: '',
+          pendidikanIbu: '',
+          tempatTinggal: '',
           beratLahir: '',
-          sanitasi: '1',
-          quintileEkonomi: '1'
+          sanitasi: '',
+          quintileEkonomi: ''
         }, 
         
         error: {
@@ -69,7 +72,8 @@ class FormInput extends React.Component {
           quintileEkonomi: false
         },        
         result: "",
-        resultText: ""
+        resultText: "",
+        persentase: ""
       };
     }
   
@@ -130,12 +134,13 @@ class FormInput extends React.Component {
             this.setState({
               result: response.result,
               resultText: response.text,
+              persentase: response.persentase,
               isLoading: false
             });
           });  
       } else{
         this.setState({
-          result: "Cek Kelengkapan Data"
+          resultText: "Cek Kelengkapan Data"
         });
       }
     }
@@ -369,33 +374,42 @@ class FormInput extends React.Component {
                   </Grid>
                 </div>
               </form>
-              
-            <Result res={this.state.resultText}></Result>    
-            {this.state.result == "!stunting" ? 
             
-              (
-              <Grid container spacing={4}>
-                <Grid item xs={12} sm={12}>
-                <ToolTip></ToolTip>
-                </Grid>                
-                <Grid item xs={12} sm={12}>
-                  <Box marginLeft="20px">
-                    <Button
-                      type="button"
-                      variant="outlined" 
-                      size="lg" 
-                      color="rose"
-                      round
-                      style={{ minWidth : "150px" }}
-                      disabled={isLoading}
-                      onClick={() => this.props.changeTab(1)}
-                      >{ isLoading ? 'Making prediction' : 'Hitung Prediksi Pertumbuhan Anak' }
-                    </Button>
-                  </Box>
-                </Grid>
-              </Grid>)       
             
-            : null}
+            <Grid container spacing={4}>
+              <Grid item xs={12} sm={12}>
+                <Result res={this.state.resultText}></Result>
+              </Grid>
+
+              {this.state.result != "" ?       
+                (
+                  <Grid item sm={12}>
+                    <Grid container container spacing={2}>
+                      <Grid item>
+                        <ToolTip result={this.state.result} persentase={this.state.persentase}></ToolTip>
+                      </Grid>
+                      <Grid item>
+                        <Button
+                          type="button"
+                          variant="outlined" 
+                          size="" 
+                          color="primary"
+                          round
+                          style={{ minWidth : "150px" }}
+                          onClick={() => this.props.changeTab(1)}
+                          >{ <span>Hitung Prediksi Pertumbuhan Anak <TimelineIcon></TimelineIcon></span> }
+                        </Button>
+                      </Grid>               
+                    </Grid>
+                  </Grid>                       
+                )                       
+              : null}
+
+              <Grid item xs={12} sm={12}>
+                <Disclaimer></Disclaimer>
+              </Grid>
+
+            </Grid>  
               
           </Container>
         </div>

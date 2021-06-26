@@ -24,7 +24,9 @@ export default function ToolTip(props){
     const [classicModal, setClassicModal] = React.useState(false);
     return(
         <div>
-            <Button color="danger" simple className={classes.text}
+            <Button color="info" 
+                variant="outlined" 
+                round
                   onClick={() => setClassicModal(true)}
             >                                  
                   Pelajari lebih lanjut hasil diatas.
@@ -56,17 +58,26 @@ export default function ToolTip(props){
                     >
                       <Close className={classes.modalClose} />
                     </IconButton>
-                    <h4 className={classes.modalTitle}>Apa Maksud Hasil Tersebut ?</h4>
+                    <h3 className={classes.modalTitle}>Apa Maksud Hasil Tersebut ?</h3>
                   </DialogTitle>
                   <DialogContent
                     id="classic-modal-slide-description"
                     className={classes.modalBody}
                   >
-                    <p className={classes.modalContent}>
-                      Angka persentase risiko tersebut memiliki arti bahwa sebanyak x % dari kelompok
-                      anak yang memiliki faktor-faktor tersebut  mengalami stunting. Hasil survey
-                      tersebut didasarkan dari data 3707 anak pada Indonesian Family Life Survey 2014.
-                    </p>
+                    {props.result == "stunting" ? 
+                      <p className={classes.modalContent}>
+                        Anak anda saat ini termasuk kategori stunting yaitu kondisi dimana tinggi anak
+                        anda dibawah standar pertumbuhan normal. Standar tersebut berdasarkan pada aturan
+                        Standar Antropometri Anak Kementrian Kesehatan Indonesia.
+                      </p>
+                    : 
+                      <p className={classes.modalContent}>
+                        Angka persentase risiko tersebut memiliki arti bahwa berdasarkan semua faktor yang telah dimasukan,
+                        terdapat {props.persentase} % probabilitas anak termasuk balita stunting. Hasil tersebut didapatkan
+                        dari model NaiveBayes yang dibuat berdasarkan data 3707 anak pada Indonesian Family Life Survey 2014.
+                      </p>
+                    }
+                    
                   </DialogContent>
                   <DialogActions className={classes.modalFooter}>
                     <Button
