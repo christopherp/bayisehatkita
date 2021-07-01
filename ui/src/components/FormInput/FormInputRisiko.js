@@ -55,7 +55,8 @@ class FormInput extends React.Component {
           tempatTinggal: '',
           beratLahir: '',
           sanitasi: '',
-          quintileEkonomi: ''
+          quintileEkonomi: '',
+          beratIbu:''
         }, 
         
         error: {
@@ -69,7 +70,8 @@ class FormInput extends React.Component {
           tempatTinggal: false,
           beratLahir: false,
           sanitasi: false,
-          quintileEkonomi: false
+          quintileEkonomi: false,
+          beratIbu: false
         },        
         result: "",
         resultText: "",
@@ -157,7 +159,7 @@ class FormInput extends React.Component {
                 <div>
                   <h2>Data Antropometri</h2>
                   <Grid container spacing={2}>
-                    <Grid item xs={6} sm={3}>
+                    <Grid item xs={12} sm={6} md={3}>
                       <TextField
                           error = {this.state.error.usia}
                           helperText = {this.state.error.usia ? "Tidak boleh kosong" : ""}
@@ -171,7 +173,7 @@ class FormInput extends React.Component {
                           variant="outlined"
                       />
                     </Grid>
-                    <Grid item xs={6} sm={3}>
+                    <Grid item xs={12} sm={6} md={3}>
                       <TextField
                           error = {this.state.error.tinggiAnak}
                           helperText = {this.state.error.tinggiAnak ? "Tidak boleh kosong" : ""}
@@ -185,7 +187,7 @@ class FormInput extends React.Component {
                           variant="outlined"
                     />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={12} md={6}>
                       <TextField
                           error = {this.state.error.jenisKelamin}
                           helperText = {this.state.error.jenisKelamin ? "Tidak boleh kosong" : ""}
@@ -209,7 +211,7 @@ class FormInput extends React.Component {
                 <div>
                   <h2>Data Faktor Determinan</h2>
                   <Grid container spacing={2}>
-                    <Grid item xs={6} sm={4}>
+                    <Grid item xs={12} sm={6} md={4}>
                       <TextField
                         error = {this.state.error.tinggiBapak}
                         helperText = {this.state.error.tinggiBapak ? "Tidak boleh kosong" : ""}
@@ -224,7 +226,7 @@ class FormInput extends React.Component {
                       />
                     </Grid>
 
-                    <Grid item xs={6} sm={4}>
+                    <Grid item xs={12} sm={6} md={4}>
                       <TextField
                         error = {this.state.error.tinggiIbu}
                         helperText = {this.state.error.tinggiIbu ? "Tidak boleh kosong" : ""}
@@ -239,26 +241,23 @@ class FormInput extends React.Component {
                       />
                     </Grid>
 
-                    <Grid item xs={12} sm={4}>
+                    
+                    <Grid item xs={12} sm={4} md={4}>
                       <TextField
-                        error = {this.state.error.statusBekerjaIbu}
-                        helperText = {this.state.error.statusBekerjaIbu ? "Tidak boleh kosong" : ""}
-                        name="statusBekerjaIbu"
-                        select
-                        label="Status Bekerja Ibu"
-                        value={formData.statusBekerjaIbu}
+                        error = {this.state.error.beratIbu}
+                        helperText = {this.state.error.beratIbu ? "Tidak boleh kosong" : ""}
+                        label="Berat Badan Ibu"
+                        name="beratIbu"
+                        type="number"
                         onChange={this.handleChange}
+                        InputProps={{
+                          endAdornment: <InputAdornment position="end">kg</InputAdornment>,
+                        }}
                         variant="outlined"
-                      >
-                        {opsiStatusBekerjaIbu.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
+                      />
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={8} md={6}>
                       <TextField
                         error = {this.state.error.pendidikanIbu}
                         helperText = {this.state.error.pendidikanIbu ? "Tidak boleh kosong" : ""}
@@ -279,7 +278,7 @@ class FormInput extends React.Component {
                       </TextField>
                     </Grid>
 
-                    <Grid item xs={12} sm={3}>
+                    <Grid item xs={12} sm={4} md={3}>
                       <TextField
                         error = {this.state.error.tempatTinggal}
                         helperText = {this.state.error.tempatTinggal ? "Tidak boleh kosong" : ""}
@@ -298,7 +297,7 @@ class FormInput extends React.Component {
                       </TextField>
                     </Grid>
 
-                    <Grid item xs={6} sm={3}>
+                    <Grid item xs={12} sm={4} md={3}>
                       <TextField
                         error = {this.state.error.sanitasi}
                         helperText = {this.state.error.sanitasi ? "Tidak boleh kosong" : ""}
@@ -317,7 +316,7 @@ class FormInput extends React.Component {
                       </TextField>
                     </Grid>
 
-                    <Grid item xs={6} sm={4}>
+                    <Grid item xs={12} sm={4} md={3}>
                       <TextField
                         error = {this.state.error.beratLahir}
                         helperText = {this.state.error.beratLahir ? "Tidak boleh kosong" : ""}
@@ -332,8 +331,27 @@ class FormInput extends React.Component {
                       />
                     </Grid>
 
+                    <Grid item xs={12} sm={4} md={3}>
+                      <TextField
+                        error = {this.state.error.statusBekerjaIbu}
+                        helperText = {this.state.error.statusBekerjaIbu ? "Tidak boleh kosong" : ""}
+                        name="statusBekerjaIbu"
+                        select
+                        label="Status Bekerja Ibu"
+                        value={formData.statusBekerjaIbu}
+                        onChange={this.handleChange}
+                        variant="outlined"
+                      >
+                        {opsiStatusBekerjaIbu.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+
                     
-                    <Grid item xs={12} sm={8}>
+                    <Grid item xs={12} sm={8} md={6}>
                       <TextField
                         error = {this.state.error.quintileEkonomi}
                         helperText = {this.state.error.quintileEkonomi ? "Tidak boleh kosong" : ""}

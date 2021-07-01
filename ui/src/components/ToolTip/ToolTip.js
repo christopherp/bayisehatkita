@@ -67,14 +67,13 @@ export default function ToolTip(props){
                     {props.result == "stunting" ? 
                       <p className={classes.modalContent}>
                         Anak anda saat ini termasuk kategori stunting yaitu kondisi dimana tinggi anak
-                        anda dibawah standar pertumbuhan normal. Standar tersebut berdasarkan pada aturan
-                        Standar Antropometri Anak Kementrian Kesehatan Indonesia.
+                        anda dibawah standar pertumbuhan normal. Angka persentase risiko tersebut memiliki arti bahwa berdasarkan semua faktor yang telah dimasukan,
+                        terdapat {props.persentase} % probabilitas anak termasuk balita stunting. Hasil tersebut didapatkan
+                        dari model NaiveBayes yang dibuat berdasarkan data 3707 anak pada Indonesian Family Life Survey 2014.
                       </p>
                     : 
                       <p className={classes.modalContent}>
-                        Angka persentase risiko tersebut memiliki arti bahwa berdasarkan semua faktor yang telah dimasukan,
-                        terdapat {props.persentase} % probabilitas anak termasuk balita stunting. Hasil tersebut didapatkan
-                        dari model NaiveBayes yang dibuat berdasarkan data 3707 anak pada Indonesian Family Life Survey 2014.
+                        Anak anda saat ini diprediksi tidak mengalami stunting di masa mendatang.
                       </p>
                     }
                     

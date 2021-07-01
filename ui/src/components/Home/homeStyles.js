@@ -6,11 +6,14 @@ const homeStyles = theme => ({
       padding: "10% 0",
     },
     title: {
-      fontSize: "4.2rem",
+      fontSize: "3.2rem",
       maxWidth: "800px",
       fontWeight: "600",
       display: "inline-block",
-      position: "relative"
+      position: "relative",
+      "@media (min-width: 576px)": {
+        fontSize: "4.2rem",
+      },
     },
     subtitle: {
       fontSize: "1.2rem",

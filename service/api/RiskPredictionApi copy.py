@@ -9,7 +9,7 @@ import pandas as pd
 lr_classifier = joblib.load("lr_classifier.joblib")
 
 # model bram
-proba_predictor = joblib.load('proba_predictor.joblib')
+classifier = joblib.load('classifier.joblib')
 antropometri = joblib.load('antropometri.joblib')
 
 @app.route('/hitung-risiko', methods=['GET', 'POST'])
@@ -94,27 +94,19 @@ class RiskPredictionApi(Resource):
             stunting =	self.labeling_stunting(float(data[0]),float(data[1]),data[2])
             print(data)	
             
-            # process pendidikan ibu aku naikin soalnya aku perlu juga
-            data[6] = self.processPendidikanIbu(float(data[6]))
-            # ngurutin datanya sesuai input yang model bima
-            # urutan tinggi ayah, tinggi ibu, berat ibu, pendidikan ibu, tempat tinggal, berat lahir, gender, umur, tinggi
-            fitur = [float(data[3]), float(data[4]), float(data[11]), int(data[6]), int(data[7]), float(data[8]), int(data[2]), float(data[0]), float(data[1])]					
-            status_stunting =	lr_classifier.predict(np.array([fitur]))
-            print(fitur)	
-            
-            if(status_stunting == 1):
-                data[3] = self.processTinggiOrtu(float(data[3]),"ayah")
-                data[4] = self.processTinggiOrtu(float(data[4]),"ibu")                
-                data[8] = self.processBeratBayi(float(data[8]))
-                prediction = proba_predictor.predict_proba(np.array(data[3:11]).reshape(1, -1))
-                persentase =  str("%.3f" % (prediction[0,1]*100))
+            if(stunting):
                 result = "stunting"
-                text = "Anak anda saat ini diprediksi akan mengalami stunting. Resiko anak anda akan mengalami stunting: " + persentase + "%"
-                
-            else:
+                text = "Anak anda saat ini tergolong balita stunting"
                 persentase = 0
+            else:
+                data[3] = self.processTinggiOrtu(float(data[3]),"ayah")
+                data[4] = self.processTinggiOrtu(float(data[4]),"ibu")
+                data[6] = self.processPendidikanIbu(float(data[6]))
+                data[8] = self.processBeratBayi(float(data[8]))
+                prediction = classifier.predict_proba(np.array(data[3:11]).reshape(1, -1))
+                persentase =  str('%.3f' % prediction[0,1]*100)
                 result = "!stunting"
-                text = "Anak anda diprediksi tidak mengalami stunting"	
+                text = "Resiko anak akan mengalami stunting: " + persentase + "%"	
             
             response = jsonify({
                 "statusCode": 200,

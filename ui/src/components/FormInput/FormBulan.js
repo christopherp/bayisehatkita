@@ -25,7 +25,7 @@ export default function FormBulan(props) {
 
         return array.map((month) => {
             return (
-                <Grid item xs={4} sm={3} md={2}>
+                <Grid item xs={6} sm={3} md={2}>
                     <TextField
                         label={`Bulan ${month}`}
                         name={`${props.tipe}-${month}`}
