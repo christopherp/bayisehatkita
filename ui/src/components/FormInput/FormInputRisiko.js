@@ -116,10 +116,11 @@ class FormInput extends React.Component {
   
     handlePredictClick = (event) => {
       const formData = this.state.formData;    
-      this.setState({ isLoading: false });
+      
       console.log(this.state.error);
       
       if(this.validate(formData)){
+        this.setState({ isLoading: true });
         fetch(
           'https://bayisehatkita.herokuapp.com/hitung-risiko',
           // 'http://localhost:5000/hitung-risiko',
@@ -327,6 +328,7 @@ class FormInput extends React.Component {
                         InputProps={{
                           endAdornment: <InputAdornment position="end">kg</InputAdornment>,
                         }}
+                        inputProps={{ step: ".1" }}
                         variant="outlined"
                       />
                     </Grid>
@@ -361,7 +363,7 @@ class FormInput extends React.Component {
                         value={formData.quintileEkonomi}
                         onChange={this.handleChange}
                         variant="outlined"
-                        helperText="Total pendapatan rumah tangga 12 bulan terakhir"
+                        helperText="*Total pendapatan rumah tangga 12 bulan terakhir"
                       >
                         {opsiQuintileEkonomi.map((option) => (
                           <MenuItem key={option.label} value={option.value}>
@@ -383,7 +385,7 @@ class FormInput extends React.Component {
                             style={{ minWidth : "150px" }}
                             disabled={isLoading}
                             onClick={!isLoading ? this.handlePredictClick : null}
-                            >{ isLoading ? 'Making prediction' : 'Predict' }
+                            >{ isLoading ? 'Making prediction' : 'Prediksi' }
                           </Button>
                         </Box>
                       </Grid>
