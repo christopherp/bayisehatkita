@@ -39,9 +39,9 @@ const javascriptStyles = {
   },
   modalContent: {
     fontSize: "18px",
-    margin: "5px 0 0",
+    margin: "15px 0 0",
     fontWeight: "300",
-    lineHeight: "1.5",
+    lineHeight: "1.4",
     color: "#676767"
   }
 };

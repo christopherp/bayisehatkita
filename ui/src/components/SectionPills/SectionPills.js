@@ -51,7 +51,7 @@ class SectionPills extends React.Component{
                 }}
                 tabs={[
                   {
-                    tabButton: "Probabilitas Risiko",
+                    tabButton: "Status dan Probabilitas Risiko",
                     tabIcon: Dashboard,
                     tabContent: (
                       <FormInputRisiko/>

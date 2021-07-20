@@ -2,8 +2,17 @@ import { container } from "../custom-container";
 
 const homeStyles = theme => ({  
     container,
+    footer: {
+      marginTop: "auto",
+      marginBottom : "5%",
+      color:"#555",
+      border:"0",
+      boxShadow:"0 -4px 18px 0px rgb(0 0 0 / 12%), 0 -7px 10px -5px rgb(0 0 0 / 15%)",
+      marginBottom:"20px",
+      backgroundColor:"#fff !important",
+      padding: "5% 0"
+    },
     mainContainer: {
-      padding: "5% 0",
     },
     innerContainer: {
       marginBottom : "40px"
@@ -36,9 +45,6 @@ const homeStyles = theme => ({
       padding: "20px",
       minWidth: "300px",
       fontWeight: "bold",
-    },
-    tableHeadFont: {
-      fontWeight: "800",
     }
 });
 

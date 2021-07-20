@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Header from "./components/Header/Header.js";
+import Footer from "./components/Footer/Footer.js";
 import HeaderLinks from "./components/Header/HeaderLinks.js";
 import Main from  './components/Main';
 import {
@@ -33,7 +34,7 @@ class App extends React.Component {
   render(){
     return (
       <Router>
-        <div>    
+        <div style={{minHeight:"100vh",display: "flex", flexDirection: "column"}}>    
           <Header
               brand="BayiSehatKita"
               rightLinks={<HeaderLinks />}
@@ -48,6 +49,7 @@ class App extends React.Component {
           <div style={{height:"100px"}}></div>
 
           <Main />
+          <Footer />
           </div>
       </Router>
     );

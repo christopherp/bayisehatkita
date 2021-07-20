@@ -6,7 +6,7 @@ import SectionPills from './SectionPills/SectionPills'
 
 
 const Main = () => (
-    <main>
+    <main style={{marginBottom:"5%"}}>
       <Switch>
         <Route exact path='/' component={Home}/>
         <Route path='/risk-pred' component={SectionPills}/>

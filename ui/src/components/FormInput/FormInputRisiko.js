@@ -7,7 +7,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from "../CustomButtons/Button.js";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import { withStyles } from '@material-ui/core/styles';
 //Opsi Input
@@ -123,7 +122,7 @@ class FormInput extends React.Component {
         this.setState({ isLoading: true });
         fetch(
           'https://bayisehatkita.herokuapp.com/hitung-risiko',
-          // 'http://localhost:5000/hitung-risiko',
+          //'http://localhost:5000/hitung-risiko',
           {
             headers: {
               'Accept': 'application/json',
