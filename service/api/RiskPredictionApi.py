@@ -107,6 +107,7 @@ class RiskPredictionApi(Resource):
                 data[4] = self.processTinggiOrtu(float(data[4]),"ibu")                
                 data[8] = self.processBeratBayi(float(data[8]))
                 prediction = proba_predictor.predict_proba(np.array(data[3:11]).reshape(1, -1))
+                dataReturn = data[3:11]
                 persentase =  str("%.3f" % (prediction[0,1]*100))
                 result = "stunting"
                 text = "Anak anda saat ini diprediksi akan mengalami stunting. Resiko anak anda akan mengalami stunting: " + persentase + "%"
@@ -121,7 +122,8 @@ class RiskPredictionApi(Resource):
                 "status": "Prediction made",
                 "result": result,
                 "text" : text,
-                "persentase" : persentase
+                "persentase" : persentase,
+                "dataReturn" : dataReturn
                 })
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response

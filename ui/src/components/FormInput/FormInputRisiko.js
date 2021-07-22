@@ -74,7 +74,8 @@ class FormInput extends React.Component {
         },        
         result: "",
         resultText: "",
-        persentase: ""
+        persentase: "",
+        faktorDeterminanPraproses: ""
       };
     }
   
@@ -116,13 +117,13 @@ class FormInput extends React.Component {
     handlePredictClick = (event) => {
       const formData = this.state.formData;    
       
-      console.log(this.state.error);
+      //console.log(this.state.error);
       
       if(this.validate(formData)){
         this.setState({ isLoading: true });
         fetch(
-          'https://bayisehatkita.herokuapp.com/hitung-risiko',
-          //'http://localhost:5000/hitung-risiko',
+          //'https://bayisehatkita.herokuapp.com/hitung-risiko',
+          'http://localhost:5000/hitung-risiko',
           {
             headers: {
               'Accept': 'application/json',
@@ -137,8 +138,10 @@ class FormInput extends React.Component {
               result: response.result,
               resultText: response.text,
               persentase: response.persentase,
-              isLoading: false
+              isLoading: false,
+              faktorDeterminanPraproses: response.dataReturn
             });
+            console.log(this.state.preprocessedInput);
           });  
       } else{
         this.setState({
@@ -397,7 +400,9 @@ class FormInput extends React.Component {
             
             <Grid container spacing={4}>
               <Grid item xs={12} sm={12}>
-                <Result res={this.state.resultText}></Result>
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                {this.state.resultText == "" ? '' : <Result res={this.state.resultText}></Result>}                
               </Grid>
 
               {this.state.result != "" ?       
@@ -405,7 +410,7 @@ class FormInput extends React.Component {
                   <Grid item sm={12}>
                     <Grid container container spacing={2}>
                       <Grid item>
-                        <ToolTip result={this.state.result} persentase={this.state.persentase}></ToolTip>
+                        <ToolTip result={this.state.result} persentase={this.state.persentase} faktorDeterminan={this.state.faktorDeterminanPraproses}></ToolTip>
                       </Grid>
                       <Grid item>
                         <Button
@@ -437,4 +442,4 @@ class FormInput extends React.Component {
   }
   
 
-  export default withStyles(useStyles)(FormInput)
+  export default withStyles(useStyles)(FormInput);

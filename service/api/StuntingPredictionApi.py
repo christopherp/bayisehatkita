@@ -102,7 +102,7 @@ class Prediction:
         a = self.beratBadan['Umur'].values.reshape(-1,1)
         b = self.beratBadan['BB'].values.reshape(-1,1)
 
-        a_train, a_test, b_train, b_test = train_test_split(a, b, test_size=0.5, random_state=0)
+        a_train, a_test, b_train, b_test = train_test_split(a, b, test_size=0.2, random_state=0)
 
         self.LinearRegression.fit(a_train,b_train)
         

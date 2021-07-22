@@ -10,10 +10,10 @@ export default function FormBulan(props) {
         let end;
 
         if(props.rangeAge == '24'){
-            start = 1;
-            end = 24;
+            start = 0;
+            end = 23;
         } else if(props.rangeAge == '60'){
-            start = 25;
+            start = 24;
             end = 60;
         }
 

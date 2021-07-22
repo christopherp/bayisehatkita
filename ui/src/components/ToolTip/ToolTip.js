@@ -10,6 +10,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import Close from "@material-ui/icons/Close";
 import styles from "./ToolTipStyle";
+import TabelProbabilitas from "../tabelProbabilitas/tabelProbabilitas.js";
 import { HashLink } from "react-router-hash-link";
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 const useStyles = makeStyles(styles);
@@ -38,13 +39,14 @@ export default function ToolTip(props){
                   classes={{
                     root: classes.center,
                     paper: classes.modal
-                  }}
+                  }}                  
                   open={classicModal}
                   TransitionComponent={Transition}
                   keepMounted
                   onClose={() => setClassicModal(false)}
                   aria-labelledby="classic-modal-slide-title"
                   aria-describedby="classic-modal-slide-description"
+                  maxWidth="md"
                 >
                   <DialogTitle
                     id="classic-modal-slide-title"
@@ -77,8 +79,15 @@ export default function ToolTip(props){
                          pada data Indonesian Family Life Survey 2014 
                         yang memiliki faktor determinan diatas termasuk dalam golongan balita stunting.    
                       </p>
-                      <br>                      
-                      </br>                      
+                      <p className={classes.modalContent}> 
+                      Tabel dibawah ini menampilkan probabilitas posterior kejadian stunting dari setiap faktor determinan. 
+                      Melalui tabel ini anda dapat mengetahui mana faktor determinan yang berpengaruh terhadap meningkatnya risiko stunting.
+                      </p>
+
+                      <br></br>
+                      <TabelProbabilitas faktorDeterminan={props.faktorDeterminan}></TabelProbabilitas>
+                      <br></br>
+
                       <HashLink to='/info#probabilitas' target="_blank" exact={true} style={{color: "#797979",}}>
                           Baca lebih lanjut terkait informasi pengaruh setiap faktor determinan terhadap probabilitas kejadian stunting.
                       </HashLink>

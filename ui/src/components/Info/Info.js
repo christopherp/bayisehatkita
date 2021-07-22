@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "./infoStyles.js";
-import TabelProbabilitas from './tabelProbabilitas';
+import TabelProbabilitas from '../tabelProbabilitas/tabelProbabilitas';
 
 const useStyles = makeStyles(styles);
 function createData(name, calories, fat, carbs, protein) {
@@ -39,14 +39,14 @@ export default function Info(){
                     <h2 className={classes.title}>Tentang Kalkulator Probabilitas Risiko Stunting.</h2>
                     <div className={classes.subtitle}>
                         <p className={classes.subtitle}>
-                        Aplikasi untuk memprediksi risiko seorang anak balita akan mengalami stunting berdasarkan
+                        Kalkulator Probabilitas Risiko Stunting merupakan aplikasi untuk memprediksi risiko seorang anak balita akan mengalami stunting berdasarkan
                         faktor-faktor determinan stunting.
                         Aplikasi ini dibuat menggunakan model pembelajaran probabilitas dengan algoritma Naive Bayes
                         berdasarkan data 3705 anak dan orang tua dataset Indonesian Family Life Survey 2014.                        
                         </p>
                         <p>
                         Faktor-faktor determinan yang digunakan untuk memprediksi probabilitas risiko stunting didapatkan
-                        dari beberapa sumber penelitian yang menganalisis faktor yang mempengerahui stunting pada anak di Indonesia.
+                        dari beberapa sumber penelitian yang menganalisis faktor yang mempengaruhi  stunting pada anak di Indonesia.
                         Beberapa penelitian tersebut yaitu:
                         </p>
                         <ul>
@@ -64,6 +64,10 @@ export default function Info(){
                         Kemudian faktor yang didapatkan dari penelitian diatas diuji kembali menggunakan data IFLS 2014 untuk mengetahui
                         signifikansi hubungan masing-masing faktor terhadap kejadian stunting. Uji korelasi dilakukan dengan metode Chi Square
                         dengan batas p-value &lt; 0.05. Faktor yang tidak menunjukkan korelasi signifikan tidak diikut sertakan dalam pembuatan model prediksi aplikasi ini.
+                        </p>
+                        <p>
+                        Menggunakan faktor determinan tersebut kemudian dibuat model menggunakan algoritma Naive Bayes untuk menghasilkan prediksi probabilitas anak akan mengalami stunting. 
+                        Hasil model yang diimplementasikan pada aplikasi ini menggunakan faktor determinan berikut, yaitu: Tinggi Bapak, Tinggi Ibu, Berat Badan Ibu, Pendidikan Ibu. Tempat Tinggal, Sanitasi, Berat Lahir Anak, Status Bekerja Ibu, dan Status Ekonomi.                     
                         </p>
                     </div>    
                 </div>
