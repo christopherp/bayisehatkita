@@ -113,6 +113,7 @@ class RiskPredictionApi(Resource):
                 text = "Anak anda saat ini diprediksi akan mengalami stunting. Resiko anak anda akan mengalami stunting: " + persentase + "%"
                 
             else:
+                dataReturn = [-1,-1,-1,-1,-1,-1,-1,-1]
                 persentase = 0
                 result = "!stunting"
                 text = "Anak anda diprediksi tidak mengalami stunting"	

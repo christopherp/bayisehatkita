@@ -1,14 +1,14 @@
 from flask import Flask, request, jsonify, make_response
 from flask_restx import Api, Resource, fields
 from api.StuntingPredictionApi import Prediction
-from flask_cors import CORS
+#from flask_cors import CORS
 import json
 import numpy as np
 import pandas as pd
 
 flask_app = Flask(__name__, static_folder='ui/build', static_url_path='/')
 
-CORS(flask_app)
+#CORS(flask_app)
 
 @flask_app.route('/')
 def index():

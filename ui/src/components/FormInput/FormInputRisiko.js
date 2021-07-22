@@ -122,8 +122,8 @@ class FormInput extends React.Component {
       if(this.validate(formData)){
         this.setState({ isLoading: true });
         fetch(
-          //'https://bayisehatkita.herokuapp.com/hitung-risiko',
-          'http://localhost:5000/hitung-risiko',
+          'https://bayisehatkita.herokuapp.com/hitung-risiko',
+          //'http://localhost:5000/hitung-risiko',
           {
             headers: {
               'Accept': 'application/json',
@@ -141,7 +141,6 @@ class FormInput extends React.Component {
               isLoading: false,
               faktorDeterminanPraproses: response.dataReturn
             });
-            console.log(this.state.preprocessedInput);
           });  
       } else{
         this.setState({

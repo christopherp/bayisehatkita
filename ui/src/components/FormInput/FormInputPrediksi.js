@@ -97,8 +97,8 @@ class FormInput extends React.Component {
     // Send data api to backend server
     requestOptions['body'] = JSON.stringify(formData)
     fetch(
-      //`https://bayisehatkita.herokuapp.com/api/data`,
-      `http://localhost:5000/api/data`,
+      `https://bayisehatkita.herokuapp.com/api/data`,
+      //`http://localhost:5000/api/data`,
       requestOptions
     ).then(res => res.json())
     .then(result => 
